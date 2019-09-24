@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by anonymous (http://jsbin.com/xazogigexi/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/most/1.7.3/most.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  <div>
+    <button class="button">Button</button>
+  </div>
+<script id="jsbin-javascript">
+// After the first click, log mouse move events for 1 second.
+// Note that DOM event handlers will automatically be unregistered.
+const start = most.fromEvent('click', document);
+const end = most.of().delay(1000);
+
+// Map the first click to a stream containing a 1 second delay
+// The click represents the window start time, after which
+// the window will be open for 1 second.
+const timeWindow = start.constant(end);
+
+const values$ = most.fromEvent('mousemove', document)
+	.during(timeWindow);
+
+values$.observe(ev => console.log(ev.x + ", " + ev.y));
+
+const sum = (ev1, ev2) => ({x: ev1.x+ev2.x, y: ev1.y+ev2.y});
+const value = values$.reduce(sum, {x: 0, y:0});
+
+value.then(console.log);
+
+
+
+</script>
+</body>
+</html>
