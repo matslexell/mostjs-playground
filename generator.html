@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by anonymous (http://jsbin.com/xogadaqejo/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/most/1.7.3/most.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.25/browser-polyfill.min.js"></script>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  <div>
+    <button class="button">Button</button>
+    
+  </div>
+<script id="jsbin-javascript">
+function* foo(index) {
+  while (index < 2) {
+    yield index++;
+  }
+}
+
+function delayPromise(ms, value) {
+	return new Promise(resolve => setTimeout(() => resolve(value), ms));
+}
+
+function* countdown(ms, num) {
+	for(let i = 0; i < num; i++) {
+		yield delayPromise(ms, "Value: " + (i+1));
+	}
+}
+
+// Logs
+// 3 (after 1 second)
+// 2 (after 1 more second)
+// 1 (after 1 more second)
+most.generate(countdown, 250, 10)
+	.observe(x => console.log(x))
+
+</script>
+</body>
+</html>
